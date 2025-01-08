@@ -26,8 +26,16 @@
   <main class="container mx-auto px-6 py-16">
     <!-- Welcome Message -->
     <section class="bg-gray-800 p-6 rounded-lg shadow-md mb-12">
-      <h2 class="text-3xl font-semibold text-teal-400">Welcome, John Doe!</h2>
+      @auth
+      <h2 class="text-3xl font-semibold text-teal-400">Welcome, {{auth()->user()->name}}!</h2>
       <p class="text-gray-300 mt-2">Here’s what’s happening in your clubs:</p>
+      @endauth
+      @guest
+      <h2 class="text-3xl font-semibold text-teal-400">Welcome, Guest!</h2>
+      <p class="text-gray-300 mt-2">Please login to view your clubs.</p>
+      @endguest
+
+       
     </section>
 
     <!-- Announcements Section -->

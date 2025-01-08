@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use App\Models\Clubs;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -45,4 +46,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function clubs(){
+        return $this->belongsToMany(Clubs::class);
+
+    }
+    
 }

@@ -17,4 +17,8 @@ class Clubs extends Model
         'president',
         'contact_email',
     ];
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

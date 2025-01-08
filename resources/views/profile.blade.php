@@ -23,8 +23,27 @@
             <img src="https://via.placeholder.com/80" alt="User Profile Picture" class="w-full h-full object-cover">
           </div>
           <div>
-            <h2 class="text-3xl font-semibold text-teal-400">John Doe</h2>
-            <p class="text-gray-300 mt-2">Email: john@example.com</p>
+            {{-- <div class="text-gray-300">
+              @auth
+                Welcome, {{ auth()->user()->name }}!
+              @else
+                Welcome, Guest!
+              @endauth
+            </div> --}}
+            @guest
+            <h2 class="text-3xl font-semibold text-teal-400">Guest</h2>
+            {{-- <p class="text-gray-300 mt-2">Email: john@example.com</p> --}}
+            <p class="text-gray-300 mt-2">Please login to view your clubs.</p>
+            @endguest
+
+            @auth
+                        {{-- <p class="text-gray-500">Here’s what’s happening in your clubs:</p>             --}}
+
+            <h2 class="text-3xl font-semibold text-teal-400">{{auth()->user()->name}}</h2>
+            <p class="text-gray-300 mt-2">Email: {{auth()->user()->email}}</p>
+            <p class="text-gray-500">Here’s what’s happening in your clubs:</p>            
+
+            @endauth
           </div>
         </section>
     
