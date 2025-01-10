@@ -13,7 +13,7 @@
                     <input type="text" name="name" class="bg-gray-700 w-full p-2 rounded" value="{{ $club->name }}" required>
                 </div>
                 <div class="mb-4">
-                    <label class="text-gray-300">Description</label>
+                    <label class="text-gray-300">Descriptieon</label>
                     <textarea name="description" class="bg-gray-700 w-full p-2 rounded" required>{{ $club->description }}</textarea>
                 </div>
                 

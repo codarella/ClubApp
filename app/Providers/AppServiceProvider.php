@@ -1,10 +1,15 @@
 <?php
 
 namespace App\Providers;
-
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Eloquent\Model; 
+use App\Models\Clubs;
+use App\Models\User;
+use Illuminate\Pagination\Paginator;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,5 +37,12 @@ class AppServiceProvider extends ServiceProvider
                 logger('Migration or Seeding error: ' . $e->getMessage());
             }
         }
+        Model::preventLazyLoading();
+
+        Paginator::useTailwind();
+        
+        Gate::define('edit-club', function (User $user, Clubs $club) {
+            return $club->user_id === $user->id;
+        });
     }
 }
