@@ -6,6 +6,8 @@ use App\Models\Clubs;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\RegisteredUserController;
 
+Route::resource('clubs', ClubController::class);
+
 Route::get('/', function () {
     return view('home');
 });

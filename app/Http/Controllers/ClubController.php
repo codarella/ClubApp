@@ -43,7 +43,7 @@ class ClubController extends Controller
         ]);
 
         $club = Clubs::create($validated);
-        $club->users()->attach(Auth::id(), ['role' => 'owner']);
+        // $club->users()->attach(Auth::id(), ['role' => 'owner']);
 
         return redirect()->route('clubs.show', $club);
     }
