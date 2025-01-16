@@ -26,8 +26,8 @@
         </div>
 
         <!-- Pagination Links -->
-        {{-- <div class="mt-6">
+        <div class="mt-6">
             {{ $clubs->links() }}
-        </div> --}}
+        </div>
     </main>
 </x-layout>
