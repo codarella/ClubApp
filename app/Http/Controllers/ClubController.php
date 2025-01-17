@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Clubs;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -40,6 +41,7 @@ class ClubController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'contact_email' => 'required|email',
+            'president' => User::where('id', Auth::id())->first()->name,
         ]);
 
         $club = Clubs::create($validated);

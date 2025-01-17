@@ -16,22 +16,10 @@ class Clubs extends Model
         'description',
         'president',
         'contact_email',
+
     ];
-
-    public function users()
+    public function user()
     {
-        return $this->belongsToMany(User::class, 'club_user', 'club_id', 'user_id')
-            ->withPivot('role')
-            ->withTimestamps();
-    }
-
-    public function announcements()
-    {
-        return $this->hasMany(Announcement::class);
-    }
-
-    public function events()
-    {
-        return $this->hasMany(Event::class);
+        return $this->belongsToMany(User::class,foreignPivotKey:"clubs_id");
     }
 }

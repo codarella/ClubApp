@@ -47,7 +47,8 @@ class User extends Authenticatable
         ];
     }
     public function clubs(){
-        return $this->belongsToMany(Clubs::class);
+        return $this->belongsToMany(Clubs::class,foreignPivotKey:"user_id" );
+        
 
     }
     
