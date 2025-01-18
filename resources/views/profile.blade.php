@@ -46,28 +46,33 @@
             @endauth
           </div>
         </section>
+        
     
         <!-- Clubs Section -->
         <section class="mb-12">
           <h2 class="text-2xl font-semibold text-teal-400 mb-4">My Clubs</h2>
+          @auth
           <div class="space-y-4">
             <!-- Club Item Example -->
+          
+            @foreach($clubs as $club)
             <div class="bg-gray-800 p-4 rounded-md shadow flex justify-between items-center">
               <div>
-                <h3 class="text-lg font-semibold text-teal-400">Programming Club</h3>
-                <p class="text-gray-300">Member</p>
+
+                <a class="text-lg font-semibold text-teal-400" href="/explore/{{$club->club_id}}">{{$club->name}}</a>
+                <p class="text-gray-300">Memeber</p>
               </div>
               <a href="#" class="bg-teal-500 text-gray-900 px-4 py-2 rounded-md hover:bg-teal-400">Enter Forum</a>
             </div>
-            <div class="bg-gray-800 p-4 rounded-md shadow flex justify-between items-center">
-              <div>
-                <h3 class="text-lg font-semibold text-teal-400">Art Club</h3>
-                <p class="text-gray-300">Admin</p>
-              </div>
-              <a href="#" class="bg-teal-500 text-gray-900 px-4 py-2 rounded-md hover:bg-teal-400">Enter Forum</a>
-            </div>
+            @endforeach
             <!-- Add more clubs as needed -->
           </div>
+          @endauth
+
+          @guest 
+          <p class="text-lg font-semibold text-teal-400">Log in to see your clubs</p>
+          @endguest
+
         </section>
     
         <!-- Admin Club Section -->

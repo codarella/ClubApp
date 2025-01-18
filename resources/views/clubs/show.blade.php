@@ -15,26 +15,27 @@
             <div class="flex items-center mb-4">
                 <span class="text-gray-500">Members: </span>
                 <span class="ml-2 text-gray-300">{{ $club->members_count }}</span>
-            </div>
 
-            <!-- Announcements Section -->
-            <div class="mt-6">
-                <h2 class="text-2xl font-bold text-teal-400 mb-4">Recent Announcements</h2>
-                @if($club->announcements->isEmpty())
-                    <p class="text-gray-500">No announcements available.</p>
-                @else
-                    <ul class="list-disc list-inside text-gray-300">
-                        @foreach($club->announcements->take(5) as $announcement)
-                            <li class="mb-2">
-                                <h3 class="text-lg font-bold">{{ $announcement->title }}</h3>
-                                <p>{{ $announcement->content }}</p>
-                                <span class="text-gray-500 text-sm">{{ $announcement->created_at->format('M d, Y') }}</span>
-                            </li>
-                        @endforeach
-                    </ul>
-                @endif
-            </div>
+            </div>  
 
+            @if(session('success'))
+                <div class="bg-green-500 text-white p-4 rounded-lg mb-4">
+                    {{ session('success') }}
+                </div>
+             @endif
+
+            @if(session('info'))
+                <div class="bg-blue-500 text-white p-4 rounded-lg mb-4">
+                    {{ session('info') }}
+                </div>
+            @endif
+            
+
+            
+
+            
+
+           
             @auth
                 <div class="mt-6 flex space-x-4">
                     <x-button href="/explore/{{$club->id}}/edit">Edit Club</x-button>
@@ -47,6 +48,18 @@
                     </form>
                 </div>
             @endauth
+            @auth
+            <form action="/explore/{{ $club->id }}/join" method="POST" class="mt-6">
+                @csrf
+                <button type="submit" class="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600">
+                    Join {{ $club->name }}
+                </button>
+            </form>
+            @endauth
+
+
+            
+
 
             <a href="/explore" class="text-teal-400 hover:underline mt-6 inline-block">Back to Clubs</a>
         </div>

@@ -18,7 +18,7 @@ class Clubs extends Model
         'contact_email',
 
     ];
-    public function user()
+    public function users()
     {
         return $this->belongsToMany(User::class,foreignPivotKey:"clubs_id");
     }

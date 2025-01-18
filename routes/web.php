@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Clubs;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\RegisteredUserController;
+use App\Http\Controllers\ProfileController;
 
 Route::resource('clubs', ClubController::class);
 
@@ -12,9 +13,7 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/profile', function () {
-    return view('profile');
-});
+Route::get('/profile',[ProfileController::class,'index']);
 Route::get('/register', [RegisteredUserController::class, 'create']);
 Route::post('/register', [RegisteredUserController::class, 'store']);
 
@@ -38,3 +37,4 @@ Route::get('/explore/{club}', [ClubController::class, 'show'])->name("name: club
 Route::get('/explore/{club}/edit', [ClubController::class, 'edit'])->name('clubs.edit');
 Route::patch('/explore/{club}', [ClubController::class, 'update'])->name('clubs.update');
 Route::delete('/explore/{club}', [ClubController::class, 'destroy'])->name('clubs.destroy');
+Route::post('/explore/{club}/join', [ClubController::class, 'join'])->name('clubs.join');

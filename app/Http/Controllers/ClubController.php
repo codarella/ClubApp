@@ -26,7 +26,7 @@ class ClubController extends Controller
 
     public function show(Clubs $club)
     {
-        $club->load('announcements'); // Eager load announcements
+        // $club->load('announcements'); // Eager load announcements
         return view('clubs.show', ['club' => $club]);
     }
 
@@ -66,8 +66,27 @@ class ClubController extends Controller
         $club->update($validated);
 
         return redirect()->route('clubs.index');
+
         
     }
+    public function join(Request $request, Clubs $club)
+{
+    $user = auth()->user();
+    $club->load('users');
+
+     // Check if the user is already a member of the club
+     if ($club->users->contains($user)) {
+        return redirect()->back()->with('info', 'You are already a member of this club.');
+    }
+
+    // Add the user to the club
+    $club->users()->attach($user->id);
+
+    return redirect()->back()->with('success', 'You have successfully joined the club!');
+
+}
+
+    
 
     public function destroy(Clubs $club)
     {

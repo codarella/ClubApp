@@ -1,4 +1,3 @@
-<!-- filepath: /c:/Users/OVERLORD/test_app/resources/views/clubs/edit.blade.php -->
 <x-layout>
     <x-slot:heading>Edit Club</x-slot:heading>
 
