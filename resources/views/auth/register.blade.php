@@ -7,22 +7,22 @@
                 @csrf
                 <div class="mb-4">
                     <label class="text-gray-300">Name</label>
-                    <input type="text" name="name" class="bg-gray-700 w-full p-2 rounded" required>
+                    <input type="text" name="name" class="bg-gray-700 w-full p-2 rounded" value="{{ old('name') }}" required>
                 </div>
                 <div class="mb-4">
                     <label class="text-gray-300">Email</label>
-                    <input type="email" name="email" class="bg-gray-700 w-full p-2 rounded" required>
+                    <input type="email" name="email" class="bg-gray-700 w-full p-2 rounded" value="{{ old('email') }}" required>
                     <x-form-error name="email" />
                 </div>
 
                 <div class="mb-4">
                     <label class="text-gray-300">Password</label>
-                    <input type="password" name="password" class="bg-gray-700 w-full p-2 rounded" required>
+                    <input type="password" name="password" class="bg-gray-700 w-full p-2 rounded" value="{{ old('password') }}" required>
                     <x-form-error name="password" />
                 </div>
                 <div class="mb-4">
                     <label class="text-gray-300">Confirm Password</label>
-                    <input type="password" name="password_confirmation" class="bg-gray-700 w-full p-2 rounded" required>
+                    <input type="password" name="password_confirmation" class="bg-gray-700 w-full p-2 rounded" value="{{ old('password_confirmation') }}" required>
                     <x-form-error name="password_confirmation" />
                 </div>
                 <button type="submit" class="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600">

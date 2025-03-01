@@ -20,6 +20,22 @@ class Clubs extends Model
     ];
     public function users()
     {
-        return $this->belongsToMany(User::class,foreignPivotKey:"clubs_id");
+        return $this->belongsToMany(User::class,foreignPivotKey:"clubs_id")
+        ->withPivot('role')
+        ->withTimestamps();
+    }
+
+    public function admins()
+    {
+        return $this->belongsToMany(User::class, 'club_user', 'clubs_id', 'user_id')
+            ->wherePivot('role', 'admin')
+            ->withTimestamps();
+    }
+
+    public function president()
+    {
+        return $this->belongsToMany(User::class, 'club_user', 'clubs_id', 'user_id')
+            ->wherePivot('role', 'president')
+            ->withTimestamps();
     }
 }

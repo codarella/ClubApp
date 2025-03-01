@@ -42,7 +42,12 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useTailwind();
         
         Gate::define('edit-club', function (User $user, Clubs $club) {
-            return $club->user_id === $user->id;
+            return $club->users()->where('user_id', $user->id)->wherePivot('role', 'owner')->exists();
+        });
+        Gate::define('is-Member',function(User $user, Clubs $club)
+        {
+            return $club->users()->where('user_id', $user->id)->exists();
+
         });
     }
 }

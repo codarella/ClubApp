@@ -3,8 +3,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Clubs;
 use App\Models\User;
+use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
+
 
 class ClubController extends Controller
 {
@@ -20,7 +23,7 @@ class ClubController extends Controller
             return $query->where('name', 'like', "%{$search}%")
                          ->orWhere('description', 'like', "%{$search}%")
                          ->orWhere('president', 'like', "%{$search}%");
-        })->paginate(10); // Paginate with 10 clubs per page
+        })->latest()->paginate(10); // Paginate with 10 clubs per page
         return view('clubs.index', ['clubs' => $clubs]);
     }
 
@@ -32,6 +35,8 @@ class ClubController extends Controller
 
     public function create()
     {
+        
+
         return view('clubs.create');
     }
 
@@ -41,22 +46,32 @@ class ClubController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'contact_email' => 'required|email',
-            'president' => User::where('id', Auth::id())->first()->name,
         ]);
 
-        $club = Clubs::create($validated);
-        // $club->users()->attach(Auth::id(), ['role' => 'owner']);
+        // Assign the president field to the name of the currently authenticated user
+        $validated['president'] = Auth::user()->name;
+        $validated['founded'] = now();
 
-        return redirect()->route('clubs.show', $club);
+
+        $club = Clubs::create($validated);
+        $user = auth()->user();
+        $club->load('users');
+
+        $club->users()->attach($user, ['role' => 'owner']);
+
+        return redirect()->route('clubs.show', $club)->with('info','Club created successfully');
     }
 
     public function edit(Clubs $club)
     {
+        Gate::authorize('edit-club', $club);
         return view('clubs.edit', ['club' => $club]);
     }
 
     public function update(Request $request, Clubs $club)
     {
+        Gate::authorize('edit-club', $club);
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
@@ -70,6 +85,7 @@ class ClubController extends Controller
         
     }
     public function join(Request $request, Clubs $club)
+    
 {
     $user = auth()->user();
     $club->load('users');
@@ -85,11 +101,26 @@ class ClubController extends Controller
     return redirect()->back()->with('success', 'You have successfully joined the club!');
 
 }
+public function leave(Request $request, Clubs $club){
+    $user = Auth::user();
+    Gate::authorize('is-Member', $club);
+
+    // Check if the user is a member of the club
+    if (!$club->users->contains($user)) {
+        return redirect()->back()->with('error', 'You are not a member of this club.');
+    }
+
+    // Remove the user from the club
+    $club->users()->detach($user->id);
+
+    return redirect()->back()->with('info', 'You have successfully left the club.');}
 
     
 
     public function destroy(Clubs $club)
     {
+        Gate::authorize('edit-club', $club);
+
         $club->delete();
 
         return redirect()->route('clubs.index');

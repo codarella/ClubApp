@@ -7,12 +7,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <title>Home/Dashboard</title>
 </head>
-<body class="bg-gray-900 text-gray-100">
+<body class="bg-black text-white">
 
   <!-- Header -->
-  <header class="bg-gray-800 border-b border-gray-700">
+  {{-- <header class="bg-gray-800 border-b border-gray-700">
     <div class="container mx-auto px-6 py-6 flex justify-between items-center">
-      {{-- <h1 class="text-2xl font-bold text-teal-400">{{$heading}}</h1> --}}
       <nav class="flex-1 flex justify-center space-x-4">
         <a href="/" class="text-gray-300 hover:text-teal-400">Home</a>
         <a href="/profile" class="text-gray-300 hover:text-teal-400">Profile</a>
@@ -34,7 +33,7 @@
         
       </div>
     </div>
-  </header>
+  </header> --}}
 
   {{$slot}}
 

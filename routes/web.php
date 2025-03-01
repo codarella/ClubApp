@@ -10,7 +10,18 @@ use App\Http\Controllers\ProfileController;
 Route::resource('clubs', ClubController::class);
 
 Route::get('/', function () {
-    return view('home');
+  
+        if (Auth::check()) {
+            $user = Auth::user();
+            $clubs = $user->clubs()->select('clubs.id as club_id', 'clubs.name')->get(); // Fetch the IDs and names of the clubs with table aliases
+        } else {
+            $user = null;
+            $clubs = collect(); // Empty collection
+        }
+
+    
+    
+        return view('home', compact('user', 'clubs'));
 });
 
 Route::get('/profile',[ProfileController::class,'index']);
@@ -38,3 +49,4 @@ Route::get('/explore/{club}/edit', [ClubController::class, 'edit'])->name('clubs
 Route::patch('/explore/{club}', [ClubController::class, 'update'])->name('clubs.update');
 Route::delete('/explore/{club}', [ClubController::class, 'destroy'])->name('clubs.destroy');
 Route::post('/explore/{club}/join', [ClubController::class, 'join'])->name('clubs.join');
+Route::delete('/explore/{club}/leave', [ClubController::class, 'leave'])->name('clubs.leave');

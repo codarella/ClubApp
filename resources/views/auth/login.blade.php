@@ -22,7 +22,8 @@
           name="email" 
           required 
           class="w-full px-4 py-2 bg-gray-700 text-gray-100 border border-gray-600 rounded-md focus:ring-2 focus:ring-teal-400 focus:outline-none"
-          placeholder="Enter your email">
+          placeholder="Enter your email"
+          >
           @error('email')
           <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
         @enderror
@@ -37,7 +38,8 @@
           name="password" 
           required 
           class="w-full px-4 py-2 bg-gray-700 text-gray-100 border border-gray-600 rounded-md focus:ring-2 focus:ring-teal-400 focus:outline-none"
-          placeholder="Enter your password">
+          placeholder="Enter your password"
+          >
       </div>
 
       <!-- Remember Me -->

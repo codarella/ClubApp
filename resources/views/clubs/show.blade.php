@@ -1,4 +1,3 @@
-<!-- filepath: /c:/Users/OVERLORD/test_app/resources/views/clubs/show.blade.php -->
 <x-layout>
     <div class="container mx-auto mt-8">
         <div class="bg-gray-800 text-gray-100 shadow-md rounded-lg p-6">
@@ -29,6 +28,11 @@
                     {{ session('info') }}
                 </div>
             @endif
+            @if(session('error'))
+            <div class="bg-red-500  text-white p-4 rounded-lg mb-4">
+                {{session('error')}}
+            </div>
+            @endif
             
 
             
@@ -38,7 +42,11 @@
            
             @auth
                 <div class="mt-6 flex space-x-4">
+                    @can('edit-club' , $club)
+
                     <x-button href="/explore/{{$club->id}}/edit">Edit Club</x-button>
+                    @endcan
+                    @can ('edit-club', $club)
                     <form method="POST" action="{{ route('clubs.destroy', $club) }}">
                         @csrf
                         @method('DELETE')
@@ -46,15 +54,29 @@
                             Delete Club
                         </button>
                     </form>
+                    @endcan
                 </div>
             @endauth
             @auth
+            
+            @cannot('is-Member', $club)
             <form action="/explore/{{ $club->id }}/join" method="POST" class="mt-6">
                 @csrf
                 <button type="submit" class="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600">
                     Join {{ $club->name }}
                 </button>
             </form>
+            @endcannot
+            
+            @can('is-Member', $club)
+            <form action="/explore/{{ $club->id }}/leave" method="POST" class="mt-6">
+                @method('DELETE')
+                @csrf
+                <button type="submit" class="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600">
+                    Leave club {{ $club->name }}
+                </button>
+            </form>
+            @endcan
             @endauth
 
 

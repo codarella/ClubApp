@@ -23,59 +23,44 @@
             <img src="https://via.placeholder.com/80" alt="User Profile Picture" class="w-full h-full object-cover">
           </div>
           <div>
-            {{-- <div class="text-gray-300">
-              @auth
-                Welcome, {{ auth()->user()->name }}!
-              @else
-                Welcome, Guest!
-              @endauth
-            </div> --}}
             @guest
             <h2 class="text-3xl font-semibold text-teal-400">Guest</h2>
-            {{-- <p class="text-gray-300 mt-2">Email: john@example.com</p> --}}
             <p class="text-gray-300 mt-2">Please login to view your clubs.</p>
             @endguest
 
             @auth
-                        {{-- <p class="text-gray-500">Here’s what’s happening in your clubs:</p>             --}}
-
             <h2 class="text-3xl font-semibold text-teal-400">{{auth()->user()->name}}</h2>
             <p class="text-gray-300 mt-2">Email: {{auth()->user()->email}}</p>
             <p class="text-gray-500">Here’s what’s happening in your clubs:</p>            
-
             @endauth
           </div>
         </section>
         
     
         <!-- Clubs Section -->
-        <section class="mb-12">
+        @auth
+        <section class="mb-12 mt-8">
           <h2 class="text-2xl font-semibold text-teal-400 mb-4">My Clubs</h2>
-          @auth
-          <div class="space-y-4">
-            <!-- Club Item Example -->
-          
+          <div class="space-y-4 max-h-96 overflow-y-auto">
             @foreach($clubs as $club)
             <div class="bg-gray-800 p-4 rounded-md shadow flex justify-between items-center">
               <div>
-
                 <a class="text-lg font-semibold text-teal-400" href="/explore/{{$club->club_id}}">{{$club->name}}</a>
-                <p class="text-gray-300">Memeber</p>
+                <p class="text-gray-300">Member</p>
               </div>
               <a href="#" class="bg-teal-500 text-gray-900 px-4 py-2 rounded-md hover:bg-teal-400">Enter Forum</a>
             </div>
             @endforeach
-            <!-- Add more clubs as needed -->
           </div>
-          @endauth
-
-          @guest 
-          <p class="text-lg font-semibold text-teal-400">Log in to see your clubs</p>
-          @endguest
-
         </section>
-    
+        @endauth
+
+        @guest 
+        <p class="text-lg font-semibold text-teal-400">Log in to see your clubs</p>
+        @endguest
+
         <!-- Admin Club Section -->
+        @auth
         <section class="mb-12">
           <h2 class="text-2xl font-semibold text-teal-400 mb-4">Admin Roles</h2>
           <div class="space-y-4">
@@ -87,6 +72,7 @@
             <!-- More Admin Clubs can be listed -->
           </div>
         </section>
+        @endauth
       </main>
     
     </body>
