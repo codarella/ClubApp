@@ -3,6 +3,30 @@
     <body class="bg-black text-white">
         <!-- Full-Width Main Content -->
         <main class="w-full py-6">
+            <header class="fixed top-0 left-[260px] right-0 h-16 flex justify-between items-center p-4 border-b border-gray-800 bg-gray-900 shadow-lg z-50">
+                <div class="flex items-center space-x-4">
+                    <h1 class="text-2xl font-bold text-red-500">ClubApp</h1>
+                    <input type="text" placeholder="Search ClubApp" class="bg-gray-800 text-white px-4 py-2 rounded-lg w-96">
+                </div>
+                <div class="flex items-center space-x-4">
+                    @auth
+                        <span class="text-gray-400">Welcome, {{ Auth::user()->name }}</span>
+                        <button class="px-4 py-2 bg-gray-700 text-white rounded-full hover:bg-gray-600">+ Create</button>
+                    @endauth
+                    <div class="flex space-x-4">
+                        @guest
+                            <x-button href="/login" class="text-gray-300 hover:text-teal-400 px-4 py-2">Login</x-button>
+                            <x-button href="/register" class="text-gray-300 hover:text-teal-400 px-4 py-2">Register</x-button>
+                        @endguest
+                        @auth
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="text-gray-300 hover:text-red-400 px-4 py-2">Logout</button>
+                            </form>
+                        @endauth
+                    </div>
+                </div>
+            </header>
             <!-- Page Heading -->
             <h2 class="text-3xl font-bold text-gray-300 mb-6 px-8">
                 Looking for something new?

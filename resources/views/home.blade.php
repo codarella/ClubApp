@@ -9,37 +9,38 @@
 </head>
 <body class="bg-black text-white">
 
-<header class="flex justify-between items-center p-4 border-b border-gray-800 bg-gray-900 shadow-lg">
-    <div class="flex items-center space-x-4">
-        <h1 class="text-2xl font-bold text-red-500">ClubApp</h1>
-        <input type="text" placeholder="Search ClubApp" class="bg-gray-800 text-white px-4 py-2 rounded-lg w-96">
-    </div>
-    <div class="flex items-center space-x-4">
-        @auth
-            <span class="text-gray-400">Welcome, {{ Auth::user()->name }}</span>
-            <button class="px-4 py-2 bg-gray-700 text-white rounded-full hover:bg-gray-600">+ Create</button>
-        @endauth
-        <div class="flex space-x-4">
-            @guest
-                <x-button href="/login" class="text-gray-300 hover:text-teal-400 px-4 py-2">Login</x-button>
-                <x-button href="/register" class="text-gray-300 hover:text-teal-400 px-4 py-2">Register</x-button>
-            @endguest
-            @auth
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="text-gray-300 hover:text-red-400 px-4 py-2">Logout</button>
-                </form>
-            @endauth
+    <header class="fixed top-0 left-[260px] right-0 h-16 flex justify-between items-center p-4 border-b border-gray-800 bg-gray-900 shadow-lg z-50">
+        <div class="flex items-center space-x-4">
+            <h1 class="text-2xl font-bold text-red-500">ClubApp</h1>
+            <input type="text" placeholder="Search ClubApp" class="bg-gray-800 text-white px-4 py-2 rounded-lg w-96">
         </div>
-    </div>
-</header>
+        <div class="flex items-center space-x-4">
+            @auth
+                <span class="text-gray-400">Welcome, {{ Auth::user()->name }}</span>
+                <button class="px-4 py-2 bg-gray-700 text-white rounded-full hover:bg-gray-600">+ Create</button>
+            @endauth
+            <div class="flex space-x-4">
+                @guest
+                    <x-button href="/login" class="text-gray-300 hover:text-teal-400 px-4 py-2">Login</x-button>
+                    <x-button href="/register" class="text-gray-300 hover:text-teal-400 px-4 py-2">Register</x-button>
+                @endguest
+                @auth
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="text-gray-300 hover:text-red-400 px-4 py-2">Logout</button>
+                    </form>
+                @endauth
+            </div>
+        </div>
+    </header>
+    
 
-<div class="flex mt-8 px-4">
-    <!-- Sidebar: Left -->
+    <div class="flex mt-[64px] pl-[260px]">
+        <!-- Sidebar: Left -->
     @include ('components.left-sidebar',['clubs'=>$clubs])
 
     <!-- Posts Section -->
-    <section class="w-3/5 mx-4">
+    <section class="flex-grow ml-[250px] p-6">
         <h2 class="text-3xl font-bold">Your Feed</h2>
         <div class="mt-6 space-y-6">
             <div class="bg-gray-900 p-6 rounded-xl border border-gray-700 shadow-md">
@@ -60,6 +61,15 @@
             </div>
         </div>
     </section>
+    {{-- <div class="flex-grow ml-[250px] p-6">
+        <h2 class="text-3xl font-bold">Your Feed</h2>
+        <div class="mt-6 space-y-6">
+            <div class="bg-gray-900 p-6 rounded-xl border border-gray-700 shadow-md">
+                <h3 class="text-xl font-semibold">A sample post title</h3>
+                <p class="text-gray-400">Some content here...</p>
+            </div>
+        </div>
+    </div> --}}
 
     <!-- Sidebar: Right -->
     {{-- <aside class="w-1/5 bg-gray-900 p-6 rounded-xl shadow-md border border-gray-700">

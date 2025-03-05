@@ -29,8 +29,16 @@ class ClubController extends Controller
 
     public function show(Clubs $club)
     {
+        if (Auth::check()) {
+            $user = Auth::user();
+            $clubs = $user->clubs()->select('clubs.id as club_id', 'clubs.name')->get(); // Fetch the IDs and names of the clubs with table aliases
+        } else {
+            $user = null;
+            $clubs = collect(); // Empty collection
+        }
+
         // $club->load('announcements'); // Eager load announcements
-        return view('clubs.show', ['club' => $club]);
+        return view('clubs.show', compact('club', 'clubs'));
     }
 
     public function create()

@@ -1,89 +1,79 @@
 <x-layout>
-    <div class="container mx-auto mt-8">
-        <div class="bg-gray-800 text-gray-100 shadow-md rounded-lg p-6">
-            <h1 class="text-3xl font-bold text-teal-400 mb-4">{{ $club->name }}</h1>
-            <p class="text-gray-300 mb-4">{{ $club->description }}</p>
-            <div class="flex items-center mb-4">
-                <span class="text-gray-500">Founded: </span>
-                <span class="ml-2 text-gray-300">{{ $club->founded }}</span>
-            </div>
-            <div class="flex items-center mb-4">
-                <span class="text-gray-500">Location: </span>
-                <span class="ml-2 text-gray-300">{{ $club->location }}</span>
-            </div>
-            <div class="flex items-center mb-4">
-                <span class="text-gray-500">Members: </span>
-                <span class="ml-2 text-gray-300">{{ $club->members_count }}</span>
-
-            </div>  
-
-            @if(session('success'))
-                <div class="bg-green-500 text-white p-4 rounded-lg mb-4">
-                    {{ session('success') }}
-                </div>
-             @endif
-
-            @if(session('info'))
-                <div class="bg-blue-500 text-white p-4 rounded-lg mb-4">
-                    {{ session('info') }}
+    <div class="container mx-auto mt-8 px-6 md:pl-[280px]">
+        
+        <!-- Club Cover Banner -->
+        <div class="relative h-48 bg-gray-800 rounded-lg shadow-md overflow-hidden">
+            @if($club->banner)
+                <img src="{{ $club->banner }}" alt="Club Banner" class="w-full h-full object-cover">
+            @else
+                <div class="w-full h-full bg-gray-700 flex items-center justify-center">
+                    <span class="text-gray-300">No Cover Banner</span>
                 </div>
             @endif
-            @if(session('error'))
-            <div class="bg-red-500  text-white p-4 rounded-lg mb-4">
-                {{session('error')}}
+        </div>
+
+        <!-- Club Header -->
+        <div class="bg-gray-900 text-gray-100 shadow-lg rounded-lg p-6 mt-4 flex items-center">
+            <img src="{{ $club->logo }}" alt="Club Logo" class="w-16 h-16 rounded-full border-4 border-gray-900">
+            <div class="ml-4">
+                <h1 class="text-3xl font-bold text-teal-400">{{ $club->name }}</h1>
+                <p class="text-gray-300">{{ $club->description }}</p>
             </div>
-            @endif
-            
 
-            
-
-            
-
-           
-            @auth
-                <div class="mt-6 flex space-x-4">
-                    @can('edit-club' , $club)
-
-                    <x-button href="/explore/{{$club->id}}/edit">Edit Club</x-button>
-                    @endcan
-                    @can ('edit-club', $club)
-                    <form method="POST" action="{{ route('clubs.destroy', $club) }}">
+            <!-- Membership Button -->
+            <div class="ml-auto">
+                @auth
+                    <form action="/explore/{{ $club->id }}/toggle-membership" method="POST">
                         @csrf
-                        @method('DELETE')
-                        <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
-                            Delete Club
+                        @method('POST')
+                        <button type="submit"
+                            class="px-4 py-2 rounded-lg font-semibold text-white transition-all
+                                {{ Auth::user()->clubs->contains($club->id) ? 'bg-red-500 hover:bg-red-600' : 'bg-teal-500 hover:bg-teal-600' }}">
+                            {{ Auth::user()->clubs->contains($club->id) ? 'Joined' : 'Join' }}
                         </button>
                     </form>
-                    @endcan
-                </div>
-            @endauth
-            @auth
-            
-            @cannot('is-Member', $club)
-            <form action="/explore/{{ $club->id }}/join" method="POST" class="mt-6">
-                @csrf
-                <button type="submit" class="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600">
-                    Join {{ $club->name }}
-                </button>
-            </form>
-            @endcannot
-            
-            @can('is-Member', $club)
-            <form action="/explore/{{ $club->id }}/leave" method="POST" class="mt-6">
-                @method('DELETE')
-                @csrf
-                <button type="submit" class="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600">
-                    Leave club {{ $club->name }}
-                </button>
-            </form>
-            @endcan
-            @endauth
-
-
-            
-
-
-            <a href="/explore" class="text-teal-400 hover:underline mt-6 inline-block">Back to Clubs</a>
+                @endauth
+            </div>
         </div>
+
+        <div class="flex mt-8">
+            <!-- Left Sidebar (optional if needed) -->
+            @include('components.left-sidebar', ['clubs' => $clubs])
+
+            <!-- Club Main Content -->
+            <section class="w-3/5 mx-4">
+                <!-- Create Post Button -->
+                @auth
+                    <div class="flex justify-end">
+                        <button class="flex items-center bg-blue-600 px-5 py-3 rounded-lg text-white font-semibold hover:bg-blue-500 transition-all">
+                            <i class="fas fa-plus mr-2"></i> Create Post
+                        </button>
+                    </div>
+                @endauth
+
+                <!-- Club Posts -->
+                <h2 class="text-2xl font-semibold mt-6 text-white">Recent Posts</h2>
+                <div class="mt-4 space-y-6">
+                    {{-- Display posts here --}}
+                </div>
+            </section>
+
+            <!-- Right Sidebar -->
+            <aside class="w-1/4 bg-gray-900 p-6 rounded-xl shadow-md border border-gray-700">
+                <h2 class="text-xl font-semibold text-white">About Community</h2>
+                <p class="text-gray-400 mt-2">{{ $club->description }}</p>
+                <div class="mt-4 text-gray-400">
+                    <p><strong class="text-white">{{ $club->members_count }}</strong> Members</p>
+                    <p><strong class="text-white">{{ $club->active_users }}</strong> Online</p>
+                </div>
+                <hr class="border-gray-700 my-4">
+                <h3 class="text-lg font-semibold text-white">Rules</h3>
+                <ul class="mt-2 space-y-2 text-gray-400">
+                    {{-- Display club rules here --}}
+                </ul>
+            </aside>
+        </div>
+
+        <a href="/explore" class="text-teal-400 hover:underline mt-6 inline-block">Back to Clubs</a>
     </div>
 </x-layout>
