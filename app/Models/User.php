@@ -2,6 +2,7 @@
 
 namespace App\Models;
 use App\Models\Clubs;
+use App\Models\Post;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -50,6 +51,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Clubs::class,foreignPivotKey:"user_id" );
         
 
+    }
+    public function posts(){
+        return $this->hasMany(Post::class);
+        
     }
     
 }

@@ -45,9 +45,11 @@
                 </form>
             </div>
             
-            <div class="flex gap-6 px-6">
-                <!-- Sidebar -->
-                <aside class="w-1/5 bg-gray-900 p-6 rounded-2xl shadow-lg overflow-y-auto max-h-screen">
+
+            <div class="flex mt-[64px] pl-[260px]">
+                <!-- Sidebar: Left -->
+            @include ('components.left-sidebar',['clubs'=>$clubs])               
+                {{-- <aside class="w-1/5 bg-gray-900 p-6 rounded-2xl shadow-lg overflow-y-auto max-h-screen">
                     <ul class="space-y-4">
                         <li>
                             <a href="/" class="flex items-center text-gray-400 hover:text-white space-x-2">
@@ -99,7 +101,7 @@
                     </ul>
                 </aside>
 
-                <!-- Main Content -->
+                <!-- Main Content --> --}}
                 <div class="flex-1">
                     @auth
                         <div class="mb-6 flex justify-end">

@@ -2,7 +2,9 @@
     <x-link href="/explore/{{$club->id}}" class="text-lg font-bold text-white hover:text-red-500">
         {{$club->name}}
     </x-link>
-    <p class="text-gray-400 mt-2">{{ $club->description }}</p>
+    <p class="text-gray-400">{{ \Illuminate\Support\Str::words($club->description, 15, '...') }}</p>
+
+    {{-- <p class="text-gray-400 mt-2">{{ $club->description }}</p> --}}
     <div class="mt-4 text-gray-500 space-y-1">
         <p>📅 Founded: {{ $club->founded }}</p>
         <p>👤 President: {{ $club->president }}</p>

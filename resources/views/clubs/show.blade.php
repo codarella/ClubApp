@@ -23,7 +23,7 @@
             <!-- Membership Button -->
             <div class="ml-auto">
                 @auth
-                    <form action="/explore/{{ $club->id }}/toggle-membership" method="POST">
+                    <form action="/explore/{{ $club->id }}/join" method="POST">
                         @csrf
                         @method('POST')
                         <button type="submit"

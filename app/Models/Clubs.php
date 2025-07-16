@@ -38,4 +38,7 @@ class Clubs extends Model
             ->wherePivot('role', 'president')
             ->withTimestamps();
     }
+    public function posts(){
+        return $this->hasMany(Post::class);
+    }
 }

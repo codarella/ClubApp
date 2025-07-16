@@ -12,8 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('posts', function (Blueprint $table) {
-            $table->id();
+            $table->id()->unique()->autoIncrement();
             $table->timestamps();
+            $table->string('title');
+            $table->text('content');
+            $table->foreignId('user_id');
         });
     }
 
